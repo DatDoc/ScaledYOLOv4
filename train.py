@@ -308,6 +308,7 @@ def train(hyp, opt, device, tb_writer=None):
                                                  imgsz=imgsz_test,
                                                  save_json=final_epoch and opt.data.endswith(os.sep + 'coco.yaml'),
                                                  model=ema.ema.module if hasattr(ema.ema, 'module') else ema.ema,
+                                                 verbose=True,
                                                  single_cls=opt.single_cls,
                                                  dataloader=testloader,
                                                  save_dir=log_dir)
@@ -343,8 +344,8 @@ def train(hyp, opt, device, tb_writer=None):
 
                 # Save last, best and delete
                 torch.save(ckpt, last)
-                if epoch >= (epochs-30):
-                    torch.save(ckpt, last.replace('.pt','_{:03d}.pt'.format(epoch)))
+                # if epoch >= (epochs-30):
+                #     torch.save(ckpt, last.replace('.pt','_{:03d}.pt'.format(epoch)))
                 if best_fitness == fi:
                     torch.save(ckpt, best)
                 del ckpt
