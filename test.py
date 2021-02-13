@@ -82,7 +82,7 @@ def test(data,
     names = model.names if hasattr(model, 'names') else model.module.names
     coco91class = coco80_to_coco91_class()
     # s = ('%20s' + '%12s' * 6) % ('Class', 'Images', 'Targets', 'P', 'R', 'mAP@.5', 'mAP@.5:.95')
-    s = ('%20s' + '%12s' * 6) % ('Class', 'Images', 'Targets', 'P', 'R', 'mAP@.4', 'mAP@.5:.95')
+    s = ('%20s' + '%12s' * 6) % ('Class', 'Images', 'Targets', 'P', 'R', 'mAP@.4', 'mAP@.4:.95')
     # p, r, f1, mp, mr, map50, map, t0, t1 = 0., 0., 0., 0., 0., 0., 0., 0., 0.
     ############### CHANGE THE MAP #################
     p, r, f1, mp, mr, map40, map, t0, t1 = 0., 0., 0., 0., 0., 0., 0., 0., 0.
