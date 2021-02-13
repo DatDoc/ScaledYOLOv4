@@ -104,7 +104,8 @@ def detect(save_img=False):
                     if save_txt:  # Write to file
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
                         with open(txt_path + '.txt', 'a') as f:
-                            f.write(('%g ' * 5 + '\n') % (cls, *xywh))  # label format
+                            # f.write(('%g ' * 5 + '\n') % (cls, *xywh))  # label format
+                            f.write("{} {} {} {} {} {}\n".format(int(cls), *xywh, conf))
 
                     if save_img or view_img:  # Add bbox to image
                         label = '%s' % (names[int(cls)])
@@ -120,26 +121,26 @@ def detect(save_img=False):
                     raise StopIteration
 
             # Save results (image with detections)
-            if save_img:
-                if dataset.mode == 'images':
-                    cv2.imwrite(save_path, im0)
-                else:
-                    if vid_path != save_path:  # new video
-                        vid_path = save_path
-                        if isinstance(vid_writer, cv2.VideoWriter):
-                            vid_writer.release()  # release previous video writer
+    #         if save_img:
+    #             if dataset.mode == 'images':
+    #                 cv2.imwrite(save_path, im0)
+    #             else:
+    #                 if vid_path != save_path:  # new video
+    #                     vid_path = save_path
+    #                     if isinstance(vid_writer, cv2.VideoWriter):
+    #                         vid_writer.release()  # release previous video writer
 
-                        fourcc = 'mp4v'  # output video codec
-                        fps = vid_cap.get(cv2.CAP_PROP_FPS)
-                        w = int(vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-                        h = int(vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-                        vid_writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*fourcc), fps, (w, h))
-                    vid_writer.write(im0)
+    #                     fourcc = 'mp4v'  # output video codec
+    #                     fps = vid_cap.get(cv2.CAP_PROP_FPS)
+    #                     w = int(vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    #                     h = int(vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    #                     vid_writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*fourcc), fps, (w, h))
+    #                 vid_writer.write(im0)
 
-    if save_txt or save_img:
-        print('Results saved to %s' % Path(out))
-        if platform == 'darwin' and not opt.update:  # MacOS
-            os.system('open ' + save_path)
+    # if save_txt or save_img:
+    #     print('Results saved to %s' % Path(out))
+    #     if platform == 'darwin' and not opt.update:  # MacOS
+    #         os.system('open ' + save_path)
 
     print('Done. (%.3fs)' % (time.time() - t0))
 
